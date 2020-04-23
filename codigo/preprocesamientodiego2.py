@@ -3,13 +3,12 @@ from datetime import datetime, timedelta
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
-import seaborn as sns
 
 #Traducir variables al español????
 
 #Leemos el archivo del dataset
 dateparse = lambda x: pd.datetime.strptime(x, '%m/%d/%Y %H:%M')
-df = pd.read_csv('C:/Users/Diego/Desktop/probart1/codigo/BD/OnlineRetail.csv', parse_dates=['InvoiceDate'], date_parser=dateparse, encoding = 'unicode_escape')
+df = pd.read_csv('BD/OnlineRetailcsv.csv', parse_dates=['InvoiceDate'], date_parser=dateparse, encoding = 'unicode_escape')
 
 
 df.head()
@@ -17,10 +16,11 @@ df.head()
 
 df.shape
 
-#Detectamos las tuplas (filas) que contienen la columna Cantidad menor a 0
+
+#Detectamos las tuplas (filas) que contienen la columna Quantity menor a 0
 
 
-df = df.loc[df['Quantity'] > 0]
+df = df.loc[df['Quantity'] < 0]
 df.shape
 
 # Descripción de los CustomerID que tienen cantidad menor a 0
@@ -110,9 +110,10 @@ df1.loc[
 ].drop_duplicates().set_index('StockCode')
 
 #Usamos un CustomerID random para encontrar las recomendaciones de productos en base al primer Customer
+###HASTA ACA, ES LA RECOMENDACIÓN SEGÚN LO COMPRADO POR EL PRIMER CUSTOMER
 
 #Otro tipo basado en los productos
-
+###AHORA ES LA RECOMENDACIÓN BASADO EN LOS PRODUCTOS COMPRADOS EN GENERAL
 item_item_sim_matrix = pd.DataFrame(cosine_similarity(customer_item_matrix.T))
 
 item_item_sim_matrix.columns = customer_item_matrix.T.index
