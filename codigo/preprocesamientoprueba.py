@@ -25,6 +25,7 @@ print("Cantidad de tuplas con CustomerId = NULL:", df_null.shape)
 print("BD nueva sin las tuplas con CustomerID = null:", df_deletenull.shape)
 print("Cantidad de tuplas restantes con Quantity < 0 en la BD nueva:", df_quantity_negative_2.shape)
 print("Cantidad de tuplas totales de la BD nueva preprocesada:", df_nuevo_sin_negativo.shape)
+print("----------------------------------------------------------")
 
 
 print("\n-- Ahora comenzar a procesar los datos para encontrar resultados --")
