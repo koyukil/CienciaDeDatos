@@ -1,32 +1,65 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+from sklearn.impute import SimpleImputer
 
-
+#Lectura del archivo de la BD
 df_bd_original = pd.read_csv('BD/OnlineRetailcsv.csv', sep=',', encoding = 'unicode_escape')
 
+#Análisis 1D a la BD sin preprocesar
+print("\nAnálsis 1D BD sin preprocesar:\n")
+headers  = df_bd_original.columns
+for  column in headers:
+    if df_bd_original[column].dtype  in ("int64", float) :
+        print( "la columna {} tiene un promedio de =  {} " .format(column,  df_bd_original[column].mean()))
+        print( "la columna {} tiene un mediana de =  {} " .format(column,  df_bd_original[column].median()))
+        print( "la columna {} tiene una desviación estandar  de =  {} " .format(column,  df_bd_original[column].std()))
+        print( "la columna {} tiene un máximo de =  {} " .format(column,  df_bd_original[column].max()))
+        print( "la columna {} tiene un mínimo de =  {} " .format(column,  df_bd_original[column].min()))
+        print ("-----------------------------------------------------------------------------")
+    if  df_bd_original[column].dtype  in ("object", "datetime64[ns]" ) :
+        print( "la columna {} tiene como moda a =  {} " .format(column,  df_bd_original[column].mode()))
+        print ("-----------------------------------------------------------------------------")
+
+#Ahora comenzamos a preprocesar la BD
+print("\n*******COMIENZA EL PREPROCESAMIENTO*******")
 df_quantity_negative = df_bd_original.loc[df_bd_original['Quantity'] < 0]
-
+#detectamos la cantidad de tuplas que tengan la columna Quantity en negativo
 df_null = df_bd_original.loc[df_bd_original['CustomerID'].isna()]
-
+#detectamos la cantidad de tuplas que tengan la columna CustomerID NULL
 df_deletenull = df_bd_original.dropna(subset=['CustomerID'])
-#df_deletenull almacena la BD resultante sin los CustomID = null
-
-df_nuevo_sin_negativo = df_deletenull.drop(df_deletenull[df_deletenull['Quantity']<0].index)
-
+#df_deletenull elimina las tuplas con CustomerID = NULL y el resultado se almacena aca mismo
 df_quantity_negative_2 = df_deletenull.loc[df_deletenull['Quantity'] < 0]
-#detecta 8mil y algo tuplas con quantity negativo (en la bd sin nulls)
+#detecta las tuplas con Quantity negativo en la bd sin nulls
+df_bd_nueva = df_deletenull.drop(df_deletenull[df_deletenull['Quantity']<0].index)
+#se elimina las tuplas con Quantity negativo restantes y se almacena la BD preprocesada en df_bd_nueva
 
-print("\n\nFormato de muestra de registros (cant.filas , columastotales)\n")
+print("\nFormato de muestra de registros (cant.filas , columnastotales)\n")
 print("-------------------- PREPROCESAMIENTO --------------------")
 print("Cantidad de tuplas totales en la BD original:", df_bd_original.shape)
 print("Cantidad de tuplas con Quantity negativo:", df_quantity_negative.shape)
 print("Cantidad de tuplas con CustomerId = NULL:", df_null.shape)
 print("BD nueva sin las tuplas con CustomerID = null:", df_deletenull.shape)
 print("Cantidad de tuplas restantes con Quantity < 0 en la BD nueva:", df_quantity_negative_2.shape)
-print("Cantidad de tuplas totales de la BD nueva preprocesada:", df_nuevo_sin_negativo.shape)
+print("Cantidad de tuplas totales de la BD nueva preprocesada:", df_bd_nueva.shape)
 print("----------------------------------------------------------")
+#Ya tenemos la BD preprocesada almacenada en df_bd_nueva
 
+#Análsis 1D de BD preprocesada
+print("\nAnálsis 1D de BD preprocesada:\n")
+
+headers  = df_bd_nueva.columns
+for  column in headers:
+    if df_bd_nueva[column].dtype  in ("int64", float) :
+        print( "la columna {} tiene un promedio de =  {} " .format(column,  df_bd_nueva[column].mean()))
+        print( "la columna {} tiene un mediana de =  {} " .format(column,  df_bd_nueva[column].median()))
+        print( "la columna {} tiene una desviación estandar  de =  {} " .format(column,  df_bd_nueva[column].std()))
+        print( "la columna {} tiene un máximo de =  {} " .format(column,  df_bd_nueva[column].max()))
+        print( "la columna {} tiene un mínimo de =  {} " .format(column,  df_bd_nueva[column].min()))
+        print ("-----------------------------------------------------------------------------")
+    if  df_bd_nueva[column].dtype  in ("object", "datetime64[ns]" ) :
+        print( "la columna {} tiene como moda a =  {} " .format(column,  df_bd_nueva[column].mode()))
+        print ("-----------------------------------------------------------------------------")
 
 print("\n-- Ahora comenzar a procesar los datos para encontrar resultados --")
 
