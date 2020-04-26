@@ -35,15 +35,11 @@ df_quantity_negative_2 = df_deletenull.loc[df_deletenull['Quantity'] < 0]
 df_bd_nueva = df_deletenull.drop(df_deletenull[df_deletenull['Quantity']<0].index)
 #se elimina las tuplas con Quantity negativo restantes y se almacena la BD preprocesada en df_bd_nueva
 #Comprobamos si existen tuplas duplicadas
-
-"""
 df_filas_duplicadas = df_bd_nueva[df_bd_nueva.duplicated()]
-print("Número de filas duplicadas: ", df_filas_duplicadas.shape)
-df_bd_nueva = df_bd_nueva.drop_duplicates()
+#Eliminamos las tuplas duplicadas de la BD nueva, almacenandose en df_bd_nueva_final
+df_bd_nueva_final = df_bd_nueva.drop_duplicates()
 #Ahora obtenemos la BD nueva sin filas duplicadas
-print("Total de filas de BD nueva sin filas duplicadas: ",df_bd_nueva.shape)
 #print(df_bd_nueva.count())
-"""
 
 print("\nFormato de muestra de registros (cant.filas , columnastotales)\n")
 print("-------------------- PREPROCESAMIENTO --------------------")
@@ -53,37 +49,32 @@ print("Cantidad de tuplas con CustomerId = NULL:", df_null.shape)
 print("BD nueva sin las tuplas con CustomerID = null:", df_deletenull.shape)
 print("Cantidad de tuplas restantes con Quantity < 0 en la BD nueva:", df_quantity_negative_2.shape)
 print("Cantidad de tuplas totales de la BD nueva preprocesada:", df_bd_nueva.shape)
+print("Número de filas duplicadas: ", df_filas_duplicadas.shape)
+print("Total de filas de BD nueva sin filas duplicadas: ",df_bd_nueva_final.shape)
 print("----------------------------------------------------------")
-#Ya tenemos la BD preprocesada almacenada en df_bd_nueva
+#Ya tenemos la BD preprocesada almacenada en df_bd_nueva_final
 
 #Análsis 1D de BD preprocesada
 print("\nAnálsis 1D de BD preprocesada:\n")
 
-headers  = df_bd_nueva.columns
+headers  = df_bd_nueva_final.columns
 for  column in headers:
-    if df_bd_nueva[column].dtype  in ("int64", float) :
-        print( "la columna {} tiene un promedio de =  {} " .format(column,  df_bd_nueva[column].mean()))
-        print( "la columna {} tiene un mediana de =  {} " .format(column,  df_bd_nueva[column].median()))
-        print( "la columna {} tiene una desviación estandar  de =  {} " .format(column,  df_bd_nueva[column].std()))
-        print( "la columna {} tiene un máximo de =  {} " .format(column,  df_bd_nueva[column].max()))
-        print( "la columna {} tiene un mínimo de =  {} " .format(column,  df_bd_nueva[column].min()))
+    if df_bd_nueva_final[column].dtype  in ("int64", float) :
+        print( "la columna {} tiene un promedio de =  {} " .format(column,  df_bd_nueva_final[column].mean()))
+        print( "la columna {} tiene un mediana de =  {} " .format(column,  df_bd_nueva_final[column].median()))
+        print( "la columna {} tiene una desviación estandar  de =  {} " .format(column,  df_bd_nueva_final[column].std()))
+        print( "la columna {} tiene un máximo de =  {} " .format(column,  df_bd_nueva_final[column].max()))
+        print( "la columna {} tiene un mínimo de =  {} " .format(column,  df_bd_nueva_final[column].min()))
         print ("-----------------------------------------------------------------------------")
-    if  df_bd_nueva[column].dtype  in ("object", "datetime64[ns]" ) :
-        print( "la columna {} tiene como moda a =  {} " .format(column,  df_bd_nueva[column].mode()))
+    if  df_bd_nueva_final[column].dtype  in ("object", "datetime64[ns]" ) :
+        print( "la columna {} tiene como moda a =  {} " .format(column,  df_bd_nueva_final[column].mode()))
         print ("-----------------------------------------------------------------------------")
 
-######### ESTO ES PARTE DE EDA ######### 
-
-#Comprobamos si existen tuplas duplicadas
-df_filas_duplicadas = df_bd_nueva[df_bd_nueva.duplicated()]
-print("Número de filas duplicadas: ", df_filas_duplicadas.shape)
-df_bd_nueva = df_bd_nueva.drop_duplicates()
-#Ahora obtenemos la BD nueva sin filas duplicadas
-print("Total de filas de BD nueva sin filas duplicadas: ",df_bd_nueva.shape)
-#print(df_bd_nueva.count())
+print("######### Análisis 2D #########")
 
 #Histograma: Frecuencia de aparición de variables en un intervalo
-df_bd_nueva.Description.value_counts().nlargest(40).plot(kind='bar', figsize=(10,5))
+print("Se visualiza el Histograma de Frecuencia")
+df_bd_nueva_final.Description.value_counts().nlargest(40).plot(kind='bar', figsize=(10,5))
 plt.title("Frecuencia de productos")
 plt.ylabel('Frecuencia')
 plt.xlabel('Producto');
@@ -91,16 +82,18 @@ plt.xlabel('Producto');
 ###############
 
 #Mapas de calor: Necesario para encontrar variables dependientes de otra(s)
+print("Se visualiza el Mapa de calor")
 plt.figure(figsize=(10,5))
-Mapa_calor= df_bd_nueva.corr()
+Mapa_calor= df_bd_nueva_final.corr()
 sns.heatmap(Mapa_calor,cmap="BrBG",annot=True)
 Mapa_calor#Muestra en pantalla el Mapa de Calor
 ###############
 
 #Scatterplot (Diagrama de dispersión) para encontrar la correlación entre dos variables
 #Debe ser algo como "a mas valor de x, mayor valor de Y..."
+print("Se visualiza el Diagrama de dispersión")
 fig, ax = plt.subplots(figsize=(10,6))
-ax.scatter(df_bd_nueva['Description'], df_bd_nueva['UnitPrice'])
+ax.scatter(df_bd_nueva_final['Description'], df_bd_nueva_final['UnitPrice'])
 ax.set_xlabel('Description')
 ax.set_ylabel('UnitPrice')
 plt.show()#Muestra en pantalla el Diagrama de dispersión
