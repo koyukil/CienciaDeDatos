@@ -63,6 +63,8 @@ for  column in headers:
 
 print("\n-- Ahora comenzar a procesar los datos para encontrar resultados --")
 
+
+
 """
 #Creamos la matriz Customer-Item
 #utilizamos tres columnas para crear la matriz. CustomerID, StoockCode y Quantity
