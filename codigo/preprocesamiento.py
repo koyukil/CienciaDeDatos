@@ -2,6 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.impute import SimpleImputer
+import seaborn as sns
 
 #Lectura del archivo de la BD
 df_bd_original = pd.read_csv('BD/OnlineRetailcsv.csv', sep=',', encoding = 'unicode_escape')
@@ -33,6 +34,16 @@ df_quantity_negative_2 = df_deletenull.loc[df_deletenull['Quantity'] < 0]
 #detecta las tuplas con Quantity negativo en la bd sin nulls
 df_bd_nueva = df_deletenull.drop(df_deletenull[df_deletenull['Quantity']<0].index)
 #se elimina las tuplas con Quantity negativo restantes y se almacena la BD preprocesada en df_bd_nueva
+#Comprobamos si existen tuplas duplicadas
+
+"""
+df_filas_duplicadas = df_bd_nueva[df_bd_nueva.duplicated()]
+print("Número de filas duplicadas: ", df_filas_duplicadas.shape)
+df_bd_nueva = df_bd_nueva.drop_duplicates()
+#Ahora obtenemos la BD nueva sin filas duplicadas
+print("Total de filas de BD nueva sin filas duplicadas: ",df_bd_nueva.shape)
+#print(df_bd_nueva.count())
+"""
 
 print("\nFormato de muestra de registros (cant.filas , columnastotales)\n")
 print("-------------------- PREPROCESAMIENTO --------------------")
@@ -61,8 +72,41 @@ for  column in headers:
         print( "la columna {} tiene como moda a =  {} " .format(column,  df_bd_nueva[column].mode()))
         print ("-----------------------------------------------------------------------------")
 
-print("\n-- Ahora comenzar a procesar los datos para encontrar resultados --")
+######### ESTO ES PARTE DE EDA ######### 
 
+#Comprobamos si existen tuplas duplicadas
+df_filas_duplicadas = df_bd_nueva[df_bd_nueva.duplicated()]
+print("Número de filas duplicadas: ", df_filas_duplicadas.shape)
+df_bd_nueva = df_bd_nueva.drop_duplicates()
+#Ahora obtenemos la BD nueva sin filas duplicadas
+print("Total de filas de BD nueva sin filas duplicadas: ",df_bd_nueva.shape)
+#print(df_bd_nueva.count())
+
+#Histograma: Frecuencia de aparición de variables en un intervalo
+df_bd_nueva.Description.value_counts().nlargest(40).plot(kind='bar', figsize=(10,5))
+plt.title("Frecuencia de productos")
+plt.ylabel('Frecuencia')
+plt.xlabel('Producto');
+#Se muestra en pantalla el Histograma de Frecuencia
+###############
+
+#Mapas de calor: Necesario para encontrar variables dependientes de otra(s)
+plt.figure(figsize=(10,5))
+Mapa_calor= df_bd_nueva.corr()
+sns.heatmap(Mapa_calor,cmap="BrBG",annot=True)
+Mapa_calor#Muestra en pantalla el Mapa de Calor
+###############
+
+#Scatterplot (Diagrama de dispersión) para encontrar la correlación entre dos variables
+#Debe ser algo como "a mas valor de x, mayor valor de Y..."
+fig, ax = plt.subplots(figsize=(10,6))
+ax.scatter(df_bd_nueva['Description'], df_bd_nueva['UnitPrice'])
+ax.set_xlabel('Description')
+ax.set_ylabel('UnitPrice')
+plt.show()#Muestra en pantalla el Diagrama de dispersión
+###############
+
+print("\n-- Ahora comenzar a procesar los datos para encontrar resultados --")
 
 
 """
