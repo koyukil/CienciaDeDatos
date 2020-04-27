@@ -95,7 +95,7 @@ plt.xlabel('Pais');
 ###############
 
 #Histograma de cantidad de productos: Frecuencia de aparición de variables en un intervalo
-print("Se visualiza el Histograma de Frecuencia de Paises")
+print("Se visualiza el Histograma de Frecuencia de Cantidad de productos")
 df_bd_nueva_final.Quantity.value_counts().nlargest(40).plot(kind='bar', figsize=(10,5))
 plt.title("Frecuencia de Cantidad de Productos")
 plt.ylabel('Frecuencia')
