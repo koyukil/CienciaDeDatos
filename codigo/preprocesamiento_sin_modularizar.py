@@ -3,18 +3,27 @@ import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.impute import SimpleImputer
 import seaborn as sns
-from Funcion1D import *
-from Funcion2D import *
-import os
 
 #Lectura del archivo de la BD
 df_bd_original = pd.read_csv('BD/OnlineRetailcsv.csv', sep=',', encoding = 'unicode_escape')
 
-#Obtenemos el análisis 1D de la BD sin preprocesar
-Funcion_1D_a_BD_Sin_Preprocesar(df_bd_original)
-os.system("PAUSE")
+"""
+#Análisis 1D a la BD sin preprocesar
+print("\nAnálsis 1D BD sin preprocesar:\n")
+headers  = df_bd_original.columns
+for  column in headers:
+    if df_bd_original[column].dtype  in ("int64", float) :
+        print( "la columna {} tiene un promedio de =  {} " .format(column,  df_bd_original[column].mean()))
+        print( "la columna {} tiene un mediana de =  {} " .format(column,  df_bd_original[column].median()))
+        print( "la columna {} tiene una desviación estandar  de =  {} " .format(column,  df_bd_original[column].std()))
+        print( "la columna {} tiene un máximo de =  {} " .format(column,  df_bd_original[column].max()))
+        print( "la columna {} tiene un mínimo de =  {} " .format(column,  df_bd_original[column].min()))
+        print ("-----------------------------------------------------------------------------")
+    if  df_bd_original[column].dtype  in ("object", "datetime64[ns]" ) :
+        print( "la columna {} tiene como moda a =  {} " .format(column,  df_bd_original[column].mode()))
+        print ("-----------------------------------------------------------------------------")
+"""
 
-####################################################################
 #Ahora comenzamos a preprocesar la BD
 print("\n*******COMIENZA EL PREPROCESAMIENTO*******")
 #detectamos la cantidad de tuplas que tengan la columna Quantity en negativo
@@ -46,21 +55,73 @@ print("Número de filas duplicadas: ", df_filas_duplicadas.shape)
 print("Total de filas de BD nueva sin filas duplicadas: ",df_bd_nueva_final.shape)
 print("----------------------------------------------------------")
 #Ya tenemos la BD preprocesada almacenada en df_bd_nueva_final
-os.system("PAUSE")
 ####################################################################
 
-#Obtenemos el análisis 1D de la BD ya preprocesada
-Funcion_1D_a_BD_Preprocesada(df_bd_nueva_final)
-os.system("PAUSE")
+#Análsis 1D de BD preprocesada
+print("\nAnálsis 1D de BD preprocesada:\n")
 
-Funcion_2D_a_BD_Preprocesada(df_bd_nueva_final)
-os.system("PAUSE")
+headers  = df_bd_nueva_final.columns
+for  column in headers:
+    if df_bd_nueva_final[column].dtype  in ("int64", float) :
+        print( "la columna {} tiene un promedio de =  {} " .format(column,  df_bd_nueva_final[column].mean()))
+        print( "la columna {} tiene un mediana de =  {} " .format(column,  df_bd_nueva_final[column].median()))
+        print( "la columna {} tiene una desviación estandar  de =  {} " .format(column,  df_bd_nueva_final[column].std()))
+        print( "la columna {} tiene un máximo de =  {} " .format(column,  df_bd_nueva_final[column].max()))
+        print( "la columna {} tiene un mínimo de =  {} " .format(column,  df_bd_nueva_final[column].min()))
+        print ("-----------------------------------------------------------------------------")
+    if  df_bd_nueva_final[column].dtype  in ("object", "datetime64[ns]" ) :
+        print( "la columna {} tiene como moda a =  {} " .format(column,  df_bd_nueva_final[column].mode()))
+        print ("-----------------------------------------------------------------------------")
+#################################
 
-#print("\n-- Ahora comenzar a procesar los datos para encontrar resultados --")
+print("\n\n######### Análisis 2D #########")
 
+#Histograma de productos: Frecuencia de aparición de variables en un intervalo
+print("Se visualiza el Histograma de Frecuencia de Productos")
+df_bd_nueva_final.Description.value_counts().nlargest(40).plot(kind='bar', figsize=(10,5))
+plt.title("Frecuencia de productos")
+plt.ylabel('Frecuencia del producto')
+plt.xlabel('Producto');
+#Se muestra en pantalla el Histograma de Frecuencia de productos
+###############
 
+#Histograma de paises: Frecuencia de aparición de variables en un intervalo
+print("Se visualiza el Histograma de Frecuencia de Paises")
+df_bd_nueva_final.Country.value_counts().nlargest(40).plot(kind='bar', figsize=(10,5))
+plt.title("Frecuencia de paises")
+plt.ylabel('Frecuencia del país')
+plt.xlabel('Pais');
+#Se muestra en pantalla el Histograma de Frecuencia de paises
+###############
 
-#IGNORAR DE AQUI A ABAJO
+#Histograma de cantidad de productos: Frecuencia de aparición de variables en un intervalo
+print("Se visualiza el Histograma de Frecuencia de Cantidad de productos")
+df_bd_nueva_final.Quantity.value_counts().nlargest(40).plot(kind='bar', figsize=(10,5))
+plt.title("Frecuencia de Cantidad de Productos")
+plt.ylabel('Frecuencia')
+plt.xlabel('Cantidad de productos');
+#Se muestra en pantalla el Histograma de Frecuencia de cantidad de productos
+
+#Mapas de calor: Necesario para encontrar variables dependientes de otra(s)
+print("Se visualiza el Mapa de calor")
+plt.figure(figsize=(10,5))
+Mapa_calor= df_bd_nueva_final.corr()
+sns.heatmap(Mapa_calor,cmap="BrBG",annot=True)
+Mapa_calor#Muestra en pantalla el Mapa de Calor
+###############
+
+#Scatterplot (Diagrama de dispersión) para encontrar la correlación entre dos variables
+#Debe ser algo como "a mas valor de x, mayor valor de Y..."
+print("Se visualiza el Diagrama de dispersión")
+fig, ax = plt.subplots(figsize=(10,6))
+ax.scatter(df_bd_nueva_final['Description'], df_bd_nueva_final['UnitPrice'])
+ax.set_xlabel('Description')
+ax.set_ylabel('UnitPrice')
+plt.show()#Muestra en pantalla el Diagrama de dispersión
+###############
+
+print("\n-- Ahora comenzar a procesar los datos para encontrar resultados --")
+
 """
 #Creamos la matriz Customer-Item
 #utilizamos tres columnas para crear la matriz. CustomerID, StoockCode y Quantity
