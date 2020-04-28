@@ -7,6 +7,7 @@ import seaborn as sns
 #Lectura del archivo de la BD
 df_bd_original = pd.read_csv('BD/OnlineRetailcsv.csv', sep=',', encoding = 'unicode_escape')
 
+"""
 #Análisis 1D a la BD sin preprocesar
 print("\nAnálsis 1D BD sin preprocesar:\n")
 headers  = df_bd_original.columns
@@ -21,24 +22,25 @@ for  column in headers:
     if  df_bd_original[column].dtype  in ("object", "datetime64[ns]" ) :
         print( "la columna {} tiene como moda a =  {} " .format(column,  df_bd_original[column].mode()))
         print ("-----------------------------------------------------------------------------")
+"""
 
 #Ahora comenzamos a preprocesar la BD
 print("\n*******COMIENZA EL PREPROCESAMIENTO*******")
-df_quantity_negative = df_bd_original.loc[df_bd_original['Quantity'] < 0]
 #detectamos la cantidad de tuplas que tengan la columna Quantity en negativo
-df_null = df_bd_original.loc[df_bd_original['CustomerID'].isna()]
+df_quantity_negative = df_bd_original.loc[df_bd_original['Quantity'] < 0]
 #detectamos la cantidad de tuplas que tengan la columna CustomerID NULL
-df_deletenull = df_bd_original.dropna(subset=['CustomerID'])
+df_null = df_bd_original.loc[df_bd_original['CustomerID'].isna()]
 #df_deletenull elimina las tuplas con CustomerID = NULL y el resultado se almacena aca mismo
-df_quantity_negative_2 = df_deletenull.loc[df_deletenull['Quantity'] < 0]
+df_deletenull = df_bd_original.dropna(subset=['CustomerID'])
 #detecta las tuplas con Quantity negativo en la bd sin nulls
-df_bd_nueva = df_deletenull.drop(df_deletenull[df_deletenull['Quantity']<0].index)
+df_quantity_negative_2 = df_deletenull.loc[df_deletenull['Quantity'] < 0]
 #se elimina las tuplas con Quantity negativo restantes y se almacena la BD preprocesada en df_bd_nueva
 #Comprobamos si existen tuplas duplicadas
-df_filas_duplicadas = df_bd_nueva[df_bd_nueva.duplicated()]
+df_bd_nueva = df_deletenull.drop(df_deletenull[df_deletenull['Quantity']<0].index)
 #Eliminamos las tuplas duplicadas de la BD nueva, almacenandose en df_bd_nueva_final
-df_bd_nueva_final = df_bd_nueva.drop_duplicates()
+df_filas_duplicadas = df_bd_nueva[df_bd_nueva.duplicated()]
 #Ahora obtenemos la BD nueva sin filas duplicadas
+df_bd_nueva_final = df_bd_nueva.drop_duplicates()
 #print(df_bd_nueva.count())
 
 print("\nFormato de muestra de registros (cant.filas , columnastotales)\n")
@@ -53,6 +55,7 @@ print("Número de filas duplicadas: ", df_filas_duplicadas.shape)
 print("Total de filas de BD nueva sin filas duplicadas: ",df_bd_nueva_final.shape)
 print("----------------------------------------------------------")
 #Ya tenemos la BD preprocesada almacenada en df_bd_nueva_final
+####################################################################
 
 #Análsis 1D de BD preprocesada
 print("\nAnálsis 1D de BD preprocesada:\n")
@@ -69,17 +72,35 @@ for  column in headers:
     if  df_bd_nueva_final[column].dtype  in ("object", "datetime64[ns]" ) :
         print( "la columna {} tiene como moda a =  {} " .format(column,  df_bd_nueva_final[column].mode()))
         print ("-----------------------------------------------------------------------------")
+#################################
 
-print("######### Análisis 2D #########")
+print("\n\n######### Análisis 2D #########")
 
-#Histograma: Frecuencia de aparición de variables en un intervalo
-print("Se visualiza el Histograma de Frecuencia")
+#Histograma de productos: Frecuencia de aparición de variables en un intervalo
+print("Se visualiza el Histograma de Frecuencia de Productos")
 df_bd_nueva_final.Description.value_counts().nlargest(40).plot(kind='bar', figsize=(10,5))
 plt.title("Frecuencia de productos")
-plt.ylabel('Frecuencia')
+plt.ylabel('Frecuencia del producto')
 plt.xlabel('Producto');
-#Se muestra en pantalla el Histograma de Frecuencia
+#Se muestra en pantalla el Histograma de Frecuencia de productos
 ###############
+
+#Histograma de paises: Frecuencia de aparición de variables en un intervalo
+print("Se visualiza el Histograma de Frecuencia de Paises")
+df_bd_nueva_final.Country.value_counts().nlargest(40).plot(kind='bar', figsize=(10,5))
+plt.title("Frecuencia de paises")
+plt.ylabel('Frecuencia del país')
+plt.xlabel('Pais');
+#Se muestra en pantalla el Histograma de Frecuencia de paises
+###############
+
+#Histograma de cantidad de productos: Frecuencia de aparición de variables en un intervalo
+print("Se visualiza el Histograma de Frecuencia de Cantidad de productos")
+df_bd_nueva_final.Quantity.value_counts().nlargest(40).plot(kind='bar', figsize=(10,5))
+plt.title("Frecuencia de Cantidad de Productos")
+plt.ylabel('Frecuencia')
+plt.xlabel('Cantidad de productos');
+#Se muestra en pantalla el Histograma de Frecuencia de cantidad de productos
 
 #Mapas de calor: Necesario para encontrar variables dependientes de otra(s)
 print("Se visualiza el Mapa de calor")
@@ -100,7 +121,6 @@ plt.show()#Muestra en pantalla el Diagrama de dispersión
 ###############
 
 print("\n-- Ahora comenzar a procesar los datos para encontrar resultados --")
-
 
 """
 #Creamos la matriz Customer-Item
@@ -188,5 +208,4 @@ df_bd_original.loc[
     df_bd_original['StockCode'].isin(top_10_similar_items), 
     ['StockCode', 'Description']
 ].drop_duplicates().set_index('StockCode').loc[top_10_similar_items]
-
 """
