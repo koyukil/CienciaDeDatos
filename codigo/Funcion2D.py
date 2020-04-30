@@ -15,10 +15,10 @@ def Histograma_Frecuencia_Productos(csv_preprocesado):
     plt.xlabel('Producto')
     plt.show();
     print ("-----------------------------------------------------------------------------")
+    #Se muestra en pantalla el Histograma de Frecuencia de productos
     ###############
     
-    #Se muestra en pantalla el Histograma de Frecuencia de productos
-    
+   
     ###############
     
 def Histograma_Frecuencia_Paises(csv_preprocesado):
@@ -32,9 +32,9 @@ def Histograma_Frecuencia_Paises(csv_preprocesado):
     plt.xlabel('Pais')
     plt.show();
     print ("-----------------------------------------------------------------------------")
+    #Se muestra en pantalla el Histograma de Frecuencia de paises
     ###############
     
-    #Se muestra en pantalla el Histograma de Frecuencia de paises
     
     ###############
     
@@ -49,9 +49,9 @@ def Histograma_Frecuencia_Cant_Producto(csv_preprocesado):
     plt.xlabel('Cantidad de productos')
     plt.show();
     print ("-----------------------------------------------------------------------------")
+    #Se muestra en pantalla el Histograma de Frecuencia de cantidad de productos
     ###############
     
-    #Se muestra en pantalla el Histograma de Frecuencia de cantidad de productos
     
     ###############
     
@@ -66,9 +66,9 @@ def Mapa_de_Calor(csv_preprocesado):
     plt.show();
     #print(Mapa_calor)
     print ("-----------------------------------------------------------------------------")
-     ###############
-    
     #Se muestra en pantalla el Mapa de Calor 
+    ###############
+    
     
     ###############
     
@@ -83,13 +83,13 @@ def Diagrama_de_Dispersion(csv_preprocesado):
     ax.set_ylabel('UnitPrice')
     plt.show();
     print ("-----------------------------------------------------------------------------")
-    ###############
-    
     #Se muestra en pantalla el Diagrama de dispersión
+    ###############
+    
     
     ###############
     
-def Funcion_2D_a_BD_Preprocesada(csv_preprocesado):
+def Analisis2D_Preprocesada(csv_preprocesado):
     Histograma_Frecuencia_Productos(csv_preprocesado)
     Histograma_Frecuencia_Paises(csv_preprocesado)
     Histograma_Frecuencia_Cant_Producto(csv_preprocesado)
