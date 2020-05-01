@@ -45,6 +45,10 @@ print("Cantidad de tuplas totales de la BD nueva preprocesada:", df_bd_nueva.sha
 print("Número de filas duplicadas: ", df_filas_duplicadas.shape)
 print("Total de filas de BD nueva sin filas duplicadas: ",df_bd_nueva_final.shape)
 print("----------------------------------------------------------")
+
+#df_temporal = df_bd_nueva_final[['Description','Quantity','InvoiceDate', 'UnitPrice', 'CustomerID']]
+#df_temporal.to_csv(r'BD\OnlineRetail_Preprocesada.csv')
+
 #Ya tenemos la BD preprocesada almacenada en df_bd_nueva_final
 os.system("PAUSE")
 ####################################################################
@@ -57,5 +61,3 @@ Analisis2D_Preprocesada(df_bd_nueva_final)
 os.system("PAUSE")
 
 #print("\n-- Ahora comenzar a procesar los datos para encontrar resultados --")
-
-
