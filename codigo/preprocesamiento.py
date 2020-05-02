@@ -6,6 +6,7 @@ import seaborn as sns
 from Funcion1D import *
 from Funcion2D import *
 import os
+import subprocess
 
 
 #Lectura del archivo de la BD
@@ -63,7 +64,9 @@ os.system("PAUSE")
 print("----------------------------------------------------------")
 print("\nEjecutando interfaz para análisis 2D: \n")
 print("***Visualizando interfaz*** ")
-os.system ("start interfaz.py")
+#Ejecutamos el interfaz del análisis 2D para visualizar los diagramas
+interfaz_analisis2D = subprocess.Popen(['python', 'interfaz.py'])
+#os.system ("start interfaz.py")
 
 #Obtenemos el análisis 2D de la BD ya preprocesada
 #Analisis2D_Preprocesada(df_bd_nueva_final)
