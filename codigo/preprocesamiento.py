@@ -34,6 +34,7 @@ df_filas_duplicadas = df_bd_nueva[df_bd_nueva.duplicated()]
 df_bd_nueva_final = df_bd_nueva.drop_duplicates()
 #print(df_bd_nueva.count())
 
+
 print("\nFormato de muestra de registros (cant.filas , columnastotales)\n")
 print("-------------------- PREPROCESAMIENTO --------------------")
 print("Cantidad de tuplas totales en la BD original:", df_bd_original.shape)
@@ -50,6 +51,7 @@ print("----------------------------------------------------------")
 #df_temporal.to_csv(r'BD\OnlineRetail_Preprocesada.csv')
 
 #Ya tenemos la BD preprocesada almacenada en df_bd_nueva_final
+df_bd_nueva_final = pd.read_csv('BD/OnlineRetail_Preprocesada.csv', sep=',', encoding = 'unicode_escape')
 os.system("PAUSE")
 ####################################################################
 
