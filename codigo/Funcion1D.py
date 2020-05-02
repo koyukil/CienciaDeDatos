@@ -4,7 +4,6 @@ import numpy as np
 from sklearn.impute import SimpleImputer
 import seaborn as sns
 
-
 def Analisis1D_SinPreprocesar(csv_no_preprocesado):
     #Análisis 1D a la BD sin preprocesar
     print("\n*******\t\tAnálsis 1D de BD sin preprocesar\t\t*******\n")
@@ -36,4 +35,3 @@ def Analisis1D_Preprocesada(csv_preprocesado):
         if  csv_preprocesado[column].dtype  in ("object", "datetime64[ns]" ) :
             print( "la columna {} tiene como moda a =  {} " .format(column,  csv_preprocesado[column].mode()))
             print ("-----------------------------------------------------------------------------")
-

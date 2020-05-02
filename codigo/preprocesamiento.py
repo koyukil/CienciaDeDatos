@@ -8,7 +8,6 @@ from Funcion2D import *
 import os
 import subprocess
 
-
 #Lectura del archivo de la BD
 df_bd_original = pd.read_csv('BD/OnlineRetailcsv.csv', sep=',', encoding = 'unicode_escape')
 
@@ -49,16 +48,13 @@ print("Total de filas de BD nueva sin filas duplicadas: ",df_bd_nueva_final.shap
 print("----------------------------------------------------------")
 
 #Creamos un archivo con la BD preprocesada tomando las columnas importantes que se utilizaran en este proyecto
-#df_temporal = df_bd_nueva_final[['Description','Quantity','InvoiceDate', 'UnitPrice', 'CustomerID','Country']]
-#df_temporal.to_csv(r'BD\OnlineRetail_Preprocesada.csv')
-
+df_temporal = df_bd_nueva_final[['Description','Quantity','InvoiceDate', 'UnitPrice', 'CustomerID','Country']]
+df_temporal.to_csv(r'BD\OnlineRetail_Preprocesada.csv')
 
 #Ya tenemos la BD preprocesada almacenada en df_bd_nueva_final
 
 df_bd_nueva_final = pd.read_csv('BD/OnlineRetail_Preprocesada.csv', sep=',', encoding = 'unicode_escape')
-
 ####################################################################
-
 
 #Obtenemos el análisis 1D de la BD ya preprocesada
 Analisis1D_Preprocesada(df_bd_nueva_final)
@@ -66,14 +62,14 @@ os.system("PAUSE")
 
 print("----------------------------------------------------------")
 print("\nEjecutando interfaz para análisis 2D: \n")
-print("***Visualizando interfaz*** ")
+print("\n***Visualizando interfaz*** ")
 #Ejecutamos el interfaz del análisis 2D para visualizar los diagramas
 interfaz_analisis2D = subprocess.Popen(['python', 'interfaz.py'])
-#os.system ("start interfaz.py")
 
 #Obtenemos el análisis 2D de la BD ya preprocesada
 #Analisis2D_Preprocesada(df_bd_nueva_final)
 os.system("PAUSE")
 print("\nEjecución del programa finalizda")
 
-#Ahora comenzar a procesar los datos para encontrar resultados
+
+

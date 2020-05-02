@@ -4,10 +4,9 @@ from Funcion2D import *
 import os
 
 df_bd_nueva_final = pd.read_csv('BD/OnlineRetail_Preprocesada.csv', sep=',', encoding = 'unicode_escape')
-#df_bd_nueva_final_completa = pd.read_csv('BD/OnlineRetailcsv.csv', sep=',', encoding = 'unicode_escape')
 
 root = Tk()
-root.title("representación 2d")
+root.title("Representación 2d")
 root.geometry('1000x1000')   #valores de ventamna
 root.config(background = "white")
 
