@@ -57,6 +57,10 @@ def Histograma_Frecuencia_Cant_Producto(csv_preprocesado):
 
 def Mapa_de_Calor(csv_preprocesado):
     #Mapas de calor: Necesario para encontrar variables dependientes de otra(s)
+
+
+    csv_preprocesado=csv_preprocesado.drop(columns =['Unnamed: 0'])
+
     print("Se visualiza el Mapa de calor")
 
     plt.figure(figsize=(10,5))
