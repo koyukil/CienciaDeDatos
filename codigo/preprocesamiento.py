@@ -7,12 +7,13 @@ from Funcion1D import *
 from Funcion2D import *
 import os
 
+
 #Lectura del archivo de la BD
 df_bd_original = pd.read_csv('BD/OnlineRetailcsv.csv', sep=',', encoding = 'unicode_escape')
 
 #Obtenemos el análisis 1D de la BD sin preprocesar
-Analisis1D_SinPreprocesar(df_bd_original)
-os.system("PAUSE")
+#Analisis1D_SinPreprocesar(df_bd_original)
+#os.system("PAUSE")
 
 ####################################################################
 #Ahora comenzamos a preprocesar la BD
@@ -27,13 +28,12 @@ df_deletenull = df_bd_original.dropna(subset=['CustomerID'])
 df_quantity_negative_2 = df_deletenull.loc[df_deletenull['Quantity'] < 0]
 #se elimina las tuplas con Quantity negativo restantes y se almacena la BD preprocesada en df_bd_nueva
 df_bd_nueva = df_deletenull.drop(df_deletenull[df_deletenull['Quantity']<0].index)
-#Eliminamos las tuplas duplicadas de la BD nueva, almacenandose en df_bd_nueva_final
 #Comprobamos si existen tuplas duplicadas
 df_filas_duplicadas = df_bd_nueva[df_bd_nueva.duplicated()]
+#Eliminamos las tuplas duplicadas de la BD nueva, almacenandose en df_bd_nueva_final
 #Ahora obtenemos la BD nueva sin filas duplicadas
 df_bd_nueva_final = df_bd_nueva.drop_duplicates()
 #print(df_bd_nueva.count())
-
 
 print("\nFormato de muestra de registros (cant.filas , columnastotales)\n")
 print("-------------------- PREPROCESAMIENTO --------------------")
@@ -47,19 +47,27 @@ print("Número de filas duplicadas: ", df_filas_duplicadas.shape)
 print("Total de filas de BD nueva sin filas duplicadas: ",df_bd_nueva_final.shape)
 print("----------------------------------------------------------")
 
+#Creamos un archivo con la BD preprocesada tomando las columnas importantes que se utilizaran en este proyecto
 #df_temporal = df_bd_nueva_final[['Description','Quantity','InvoiceDate', 'UnitPrice', 'CustomerID']]
 #df_temporal.to_csv(r'BD\OnlineRetail_Preprocesada.csv')
 
 #Ya tenemos la BD preprocesada almacenada en df_bd_nueva_final
 df_bd_nueva_final = pd.read_csv('BD/OnlineRetail_Preprocesada.csv', sep=',', encoding = 'unicode_escape')
-os.system("PAUSE")
 ####################################################################
+
 
 #Obtenemos el análisis 1D de la BD ya preprocesada
 Analisis1D_Preprocesada(df_bd_nueva_final)
 os.system("PAUSE")
 
-Analisis2D_Preprocesada(df_bd_nueva_final)
-os.system("PAUSE")
+print("----------------------------------------------------------")
+print("\nEjecutando interfaz para análisis 2D: \n")
+print("***Visualizando interfaz*** ")
+os.system ("start interfaz.py")
 
-#print("\n-- Ahora comenzar a procesar los datos para encontrar resultados --")
+#Obtenemos el análisis 2D de la BD ya preprocesada
+#Analisis2D_Preprocesada(df_bd_nueva_final)
+os.system("PAUSE")
+print("\nEjecución del programa finalizda")
+
+#Ahora comenzar a procesar los datos para encontrar resultados

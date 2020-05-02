@@ -23,10 +23,10 @@ B_Histograma_frec_cantProductos.place (x = 300, y =100 , anchor  = "center")
 B_Mapa_calor=Button( root, text ="Mapa\nCalor", command =lambda:Mapa_de_Calor(df_bd_nueva_final))
 B_Mapa_calor.place (x = 100, y =300 , anchor  = "center")
 
-B_dispersion_CantDia=Button( root, text ="Diagrama\nDispersión\nCatidad\nDía", command =lambda:Diagrama_de_Dispersion_cantidad_dia(df_bd_nueva_final))
+B_dispersion_CantDia=Button( root, text ="Diagrama\nDispersión\nCantidad\nDía", command =lambda:Diagrama_de_Dispersion_cantidad_dia(df_bd_nueva_final))
 B_dispersion_CantDia.place (x = 200, y =300 , anchor  = "center")
 
-B_dispersion_CantMes=Button( root, text ="Diagrama\nDispersión\nCatidad\nMes", command =lambda:Diagrama_de_Dispersion_cantidad_mes(df_bd_nueva_final))
+B_dispersion_CantMes=Button( root, text ="Diagrama\nDispersión\nCantidad\nMes", command =lambda:Diagrama_de_Dispersion_cantidad_mes(df_bd_nueva_final))
 B_dispersion_CantMes.place (x = 300, y =300 , anchor  = "center")
 
 root.mainloop()
