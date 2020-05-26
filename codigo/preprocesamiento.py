@@ -48,7 +48,8 @@ print("Total de filas de BD nueva sin filas duplicadas: ",df_bd_nueva_final.shap
 print("----------------------------------------------------------")
 
 #Creamos un archivo con la BD preprocesada tomando las columnas importantes que se utilizaran en este proyecto
-df_temporal = df_bd_nueva_final[['Description','Quantity','InvoiceDate', 'UnitPrice', 'CustomerID','Country']]
+
+df_temporal = df_bd_nueva_final[['InvoiceNo','Description','Quantity','InvoiceDate', 'UnitPrice', 'CustomerID','Country']]
 df_temporal.to_csv(r'BD\OnlineRetail_Preprocesada.csv')
 
 #Ya tenemos la BD preprocesada almacenada en df_bd_nueva_final
@@ -70,6 +71,3 @@ interfaz_analisis2D = subprocess.Popen(['python', 'interfaz.py'])
 #Analisis2D_Preprocesada(df_bd_nueva_final)
 os.system("PAUSE")
 print("\nEjecución del programa finalizda")
-
-
-
