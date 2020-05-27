@@ -7,6 +7,8 @@ from Funcion1D import *
 from Funcion2D import *
 import os
 import subprocess
+from sklearn.metrics.pairwise import cosine_similarity
+
 
 #Lectura del archivo de la BD
 df_bd_original = pd.read_csv('BD/OnlineRetailcsv.csv', sep=',', encoding = 'unicode_escape')
@@ -49,7 +51,7 @@ print("----------------------------------------------------------")
 
 #Creamos un archivo con la BD preprocesada tomando las columnas importantes que se utilizaran en este proyecto
 
-df_temporal = df_bd_nueva_final[['InvoiceNo','Description','Quantity','InvoiceDate', 'UnitPrice', 'CustomerID','Country']]
+df_temporal = df_bd_nueva_final[['InvoiceNo','StockCode', 'Description','Quantity','InvoiceDate', 'UnitPrice', 'CustomerID','Country']]
 df_temporal.to_csv(r'BD\OnlineRetail_Preprocesada.csv')
 
 #Ya tenemos la BD preprocesada almacenada en df_bd_nueva_final
@@ -70,4 +72,6 @@ interfaz_analisis2D = subprocess.Popen(['python', 'interfaz.py'])
 #Obtenemos el análisis 2D de la BD ya preprocesada
 #Analisis2D_Preprocesada(df_bd_nueva_final)
 os.system("PAUSE")
-print("\nEjecución del programa finalizda")
+
+#################################### HITO 2 ####################################
+
