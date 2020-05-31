@@ -1,4 +1,6 @@
 from fase2_funciones import *
+import os
+import subprocess
 
 df_bd_preprocesada = pd.read_csv('BD/OnlineRetail_Preprocesada.csv', sep=',', encoding = 'unicode_escape')
 df_pivot = df_bd_preprocesada['InvoiceDate'].str.split(expand = True)
@@ -13,3 +15,6 @@ df_bd_preprocesada['Monto'] = df_bd_preprocesada['UnitPrice'] * df_bd_preprocesa
 articulos_libras_promedio (df_bd_preprocesada)
 grupo_cliente(df_bd_preprocesada)
 numero_transacciones(df_bd_preprocesada)
+
+#--------------------Se ejecuta el archivo Apriori.py-------------
+interfaz_analisis2D = subprocess.Popen(['python', 'Apriori.py'])
