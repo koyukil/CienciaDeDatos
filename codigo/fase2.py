@@ -17,4 +17,4 @@ grupo_cliente(df_bd_preprocesada)
 numero_transacciones(df_bd_preprocesada)
 
 #--------------------Se ejecuta el archivo Apriori.py-------------
-interfaz_analisis2D = subprocess.Popen(['python', 'Apriori.py'])
+Algoritmo_Apriori = subprocess.Popen(['python', 'Apriori.py'])

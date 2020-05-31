@@ -22,7 +22,7 @@ len_records = len(df_bd_ordenadas)
 
 #Se genera la matriz que representa a las transacciones a utilizar y las ordena
 matriz = []
-# antes era 22-532-64
+#Antes era 22-532-64
 maxF = 5
 maxL = 532
 maxC  = 20
