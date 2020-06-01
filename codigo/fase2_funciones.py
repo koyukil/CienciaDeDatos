@@ -36,8 +36,6 @@ def grupo_cliente(df_bd_preprocesada):
     print("Cantidad de clientes normales {}" .format(len(normal)))
 
 
-
-
 #------------------------------Intervalo de menor y mayor numero de transacciones-------------------
 def numero_transacciones(df_bd_preprocesada):
     df_pivot = df_bd_preprocesada['Hora'].str.split(expand = True, pat =":")
