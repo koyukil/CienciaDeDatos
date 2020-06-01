@@ -12,14 +12,24 @@ df_pivot.rename(columns = {0: 'Fecha', 1: 'Hora'}, inplace=True)
 df_bd_preprocesada = df_bd_preprocesada.drop(columns =['Unnamed: 0','InvoiceDate'])
 df_bd_preprocesada = pd.concat([df_bd_preprocesada,df_pivot], axis = 1)
 df_bd_preprocesada['Monto'] = df_bd_preprocesada['UnitPrice'] * df_bd_preprocesada['Quantity']
-df_bd_ordenadas = df_bd_preprocesada.sort_values('InvoiceNo')
+
+df_codigos =  df_bd_preprocesada[['StockCode', 'Description']].groupby('StockCode')
+df_bd_agrupada = df_bd_preprocesada[['InvoiceNo' , 'Description']].groupby('InvoiceNo').sum()
+
 
 print("\nAplicando algoritmo A-priori...\n")
 
 #Largo de la tabla anterior
-len_records = len(df_bd_ordenadas)
-#print(len_records)
+len_records = len(df_bd_agrupada)
+print(len_records)
+print(df_bd_agrupada.head(5))
+print(len(df_codigos))
+print(df_codigos.head(5))
+association_rules = apriori(df_bd_agrupada, min_support=0.2, min_confidence=0.6, min_lift=3, min_length=2)
+print(association_rules)
 
+
+"""
 #Se genera la matriz que representa a las transacciones a utilizar y las ordena
 matriz = []
 # antes era 22-532-64
@@ -46,7 +56,7 @@ for i in range (0,maxL):
             desc = str(df_bd_ordenadas.values[i,1])
             matriz[ii][0]=desc
             invoice = df_bd_ordenadas.values[i,0]
-#print (matriz)    
+#print (matriz)
 
 #La matriz resultante se deja en un nuevo archivo .CSV para despues usarla como parámetro
 import csv
@@ -97,7 +107,7 @@ for pos in range(5):
     print("\n")
     time.sleep(2)
 
-"""
+
 #Se crea un ciclo for para imprimir todas las regla de asociación encontradas
 #Se comenta el ciclo ya que es solo para mostrar la lógica, si se imprimieran todas tardaría mucho tiempo
 for pos in range(len(association_results)):
