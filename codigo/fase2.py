@@ -1,4 +1,4 @@
-from fase2_funciones import *
+from Fase2_funciones import *
 import os
 import subprocess
 
