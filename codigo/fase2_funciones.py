@@ -2,18 +2,27 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.impute import SimpleImputer
+from scipy import stats
 
 #-------------------------cuantos articulos en promedio se compra en cada transacción---------------------
 def  articulos_libras_promedio (df_bd_preprocesada):
     df_pivot = df_bd_preprocesada[['InvoiceNo','Quantity', 'Monto']].groupby(['InvoiceNo']).sum()
     df_pivot=df_pivot.reset_index()
-    print('El promedio de articulos por compra es  {} ' .format(df_pivot['Quantity'].mean()))
-    print('la desviación estandar en cantidad de articulos por compra es  {} ' .format(df_pivot['Quantity'].std()))
-    #-----El resultado es muy alto y poco real, eliminar valores demasiado altos para  mejorar la media-------
+    media_cortada_articulos = stats.trim_mean(df_pivot['Quantity'], 0.3)
+    print ( "\n-----------------------Articulos/Libras promedio-------------------------------\n ")
+    print('El promedio de articulos por compra es  {} ' .format(media_cortada_articulos))
+    print ( "\n------------------------------------------------------\n ")
 
+    #print('la desviación estandar en cantidad de articulos por compra es  {} ' .format(df_pivot['Quantity'].std()))
+    #print('el maximo de articulos por compra es  {} ' .format(df_pivot['Quantity'].max()))
+
+    #-----El resultado es muy alto y poco real, eliminar valores demasiado altos para  mejorar la media-------
+    #-----Solucionado con trim_mean-----------------------------------
     #---------------------Promedio de libras gastadas----------------------------
-    print('El promedio de libras gastadas por compra es  {} ' .format(df_pivot['Monto'].mean()))
-    print('la desviación estandar de libras por compra es  {} ' .format(df_pivot['Monto'].std()))
+    media_cortada_monto = stats.trim_mean(df_pivot['Monto'], 0.3)
+    print('El promedio de libras gastadas por compra es  {} ' .format(media_cortada_monto))
+    #print('la desviación estandar de libras por compra es  {} ' .format(df_pivot['Monto'].std()))
+    #print('el maximo de libras por compra es  {} ' .format(df_pivot['Monto'].max()))
     #--------------- Mismo que lo anterior----------------
 
 
@@ -30,7 +39,7 @@ def grupo_cliente(df_bd_preprocesada):
             normal.append(df_pivot.iloc[i]['CustomerID'])
         else:
             premium.append(df_pivot.iloc[i]['CustomerID'])
-
+    print ( "\n---------------------------Clasificación de clientes ---------------------------\n ")
     print("Cantidad total de clientes {}" .format(len(df_pivot)))
     print("Cantidad de clientes premium {}" .format(len(premium)))
     print("Cantidad de clientes normales {}" .format(len(normal)))
@@ -39,6 +48,7 @@ def grupo_cliente(df_bd_preprocesada):
 #------------------------------Intervalo de menor y mayor numero de transacciones-------------------
 def numero_transacciones(df_bd_preprocesada):
     df_pivot = df_bd_preprocesada['Hora'].str.split(expand = True, pat =":")
+    print ( "\n---------------------Horas de mayor/menor transacciones ---------------------------------\n ")
     print("la hora donde más se compra es {} horas" .format(df_pivot[0].mode().item()))
     df_pivot = df_pivot.groupby([0]).count()
     df_pivot=df_pivot.reset_index()
