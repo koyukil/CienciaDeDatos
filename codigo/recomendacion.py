@@ -64,7 +64,7 @@ top_10_similar_items = list(
     .index
 )
 
-print("\nRecomendamos que compres los productos:")
+print("\nRecomendación de productos:")
 print(top_10_similar_items)
 
 #En caso de que hayan productos duplicados en la recomendación, se eliminan

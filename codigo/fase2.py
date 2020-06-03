@@ -1,4 +1,5 @@
 from fase2_funciones import *
+from Apriori import *
 import os
 import subprocess
 
@@ -17,4 +18,4 @@ grupo_cliente(df_bd_preprocesada)
 numero_transacciones(df_bd_preprocesada)
 
 #--------------------Se ejecuta el archivo Apriori.py-------------
-interfaz_analisis2D = subprocess.Popen(['python', 'Apriori.py'])
+a_priori(df_bd_preprocesada)
