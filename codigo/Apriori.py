@@ -7,9 +7,10 @@ import os
 import time
 import random
 
-def a_priori(df_bd_preprocesada):
+def a_priori(df_bd_preprocesada,support,confidence):
     #------------------Se crea copia de df original--------------------
-
+    print ("Soporte:  ",support,"\n")
+    print ("Confianza:  ",confidence,"\n")
 
     df_bd_agrupada = df_bd_preprocesada[['InvoiceNo' , 'Description']]
     #------------------Se agrega , a la columna Description para separarlos al agruparlos
@@ -32,7 +33,7 @@ def a_priori(df_bd_preprocesada):
         matriz.append(split)
     #-----------------Se realiza algoritmo apriori y se imprimem las 20 mejores reglas --------------------------------
     print( "\n---------------top 20 reglas  -----------------")
-    association_rules = apriori(matriz, min_support=0.01, min_confidence=0.6, min_lift=3, min_length= None)
+    association_rules = apriori(matriz, min_support=support, min_confidence=confidence, min_lift=3, min_length= None)
     reglas = []
     for idx, x in enumerate(association_rules):
         if idx > 20:
@@ -45,5 +46,6 @@ def a_priori(df_bd_preprocesada):
     print ( "\n----------------Oferta Diaria -------------------------\n ")
     print ( " la oferta de hoy es  {} " .format(regla_diaria))
     print ( "\n----------------Oferta Diaria -------------------------\n ")
+    print("///////////////////////////////////////////")
     print("Ejecución del Algoritmo A-priori terminada.")
-    print("Presione una tecla para continuar...")
+    print("///////////////////////////////////////////")
