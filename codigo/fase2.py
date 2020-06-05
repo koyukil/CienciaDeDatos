@@ -18,4 +18,4 @@ grupo_cliente(df_bd_preprocesada)
 numero_transacciones(df_bd_preprocesada)
 
 #--------------------Se ejecuta el archivo Apriori.py-------------
-a_priori(df_bd_preprocesada)
+a_priori(df_bd_preprocesada, 0.01, 0.2)

@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.impute import SimpleImputer
 from scipy import stats
+import seaborn as sns
 
 #-------------------------cuantos articulos en promedio se compra en cada transacción---------------------
 def  articulos_libras_promedio (df_bd_preprocesada):
@@ -50,11 +51,10 @@ def numero_transacciones(df_bd_preprocesada):
     df_pivot = df_bd_preprocesada['Hora'].str.split(expand = True, pat =":")
     print ( "\n---------------------Horas de mayor/menor transacciones ---------------------------------\n ")
     print("la hora donde más se compra es {} horas" .format(df_pivot[0].mode().item()))
-    df_pivot = df_pivot.groupby([0]).count()
-    df_pivot=df_pivot.reset_index()
-    valorMin = df_pivot[1].min().item() #-- Se define valor minimo de transacciones
-    min = 0
-    for i in range(0, len(df_pivot)): #--- Se realiza comparación para saber hora de minimás transacciones
-        if valorMin == df_pivot.iloc[i][1]:
-            min = df_pivot.iloc[i][0]
-    print("la hora donde menos se compra es {} horas" .format(min))
+
+    df_pivot.rename(columns = {0: 'Hora'}, inplace=True)
+    df_pivot.Hora.value_counts().nlargest(40).plot(kind='bar', figsize=(10,5))
+    plt.title("Horas de Mayor y Menor compras")
+    plt.ylabel('Frecuencia del producto')
+    plt.xlabel('Horario')
+    plt.show();
