@@ -57,4 +57,36 @@ def numero_transacciones(df_bd_preprocesada):
     plt.title("Horas de Mayor y Menor compras")
     plt.ylabel('Frecuencia del producto')
     plt.xlabel('Horario')
-    plt.show();
+    plt.show()
+    
+#------------------------------Grafico de barras sobre compras en distintos meses-------------------    
+def grafico_monto(df_bd_preprocesada):
+    #Scatterplot (Diagrama de dispersión) para encontrar la correlación entre dos variables
+
+    #se divide InvoiceDate en fecha y hora
+    df_pivot = df_bd_preprocesada['Fecha'].str.split(expand = True)
+    df_pivot = df_pivot[0].str.split(pat = "/",expand = True)
+    #se crea nuevo DF con fecha de Pivot y Quantity del DF original
+    df_final = pd.concat([df_pivot[0],df_pivot[2],df_bd_preprocesada['Monto']], axis = 1)
+    #se renombra columna 0 como DATE
+    df_final.rename(columns = {0: 'Mes', 2:'Año'}, inplace=True)
+    df_pivot=df_final
+    #se agrupa DF según Mes y Año y se elimina el indice
+
+    df_final=df_final.groupby(['Mes','Año']).sum()
+    df_final=df_final.reset_index()
+    #se crea nueva columna Fecha, se ordena por año y mes
+    df_final['Fecha'] = df_final['Mes']+ "/" + df_final['Año']
+    df_final['Mes']= df_final['Mes'].astype(int)
+    df_final=df_final.sort_values(['Año','Mes'],ascending=True)
+    
+    #se imprime Grafico de barras
+    print("Se visualiza el Diagrama de dispersión")
+    fig, ax = plt.subplots(figsize=(10,6))
+    ax.bar(df_final['Fecha'], df_final['Monto'])
+    ax.set_xlabel('Fecha')
+    ax.set_ylabel('Monto')
+    plt.title("Monto por Mes")
+    plt.show()
+    #Se muestra en pantalla el Diagrama de dispersión
+    ###############
