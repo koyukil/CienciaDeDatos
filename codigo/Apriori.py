@@ -19,10 +19,7 @@ def a_priori(df_bd_preprocesada,support,confidence):
 
     #df_codigos =  df_bd_preprocesada[['StockCode', 'Description']].groupby('StockCode')
     df_bd_agrupada = df_bd_agrupada.groupby('InvoiceNo').sum()
-
-
-    print("\nAplicando algoritmo A-priori... \n")
-
+    
     #Largo de la tabla anterior
     len_records = len(df_bd_agrupada)
 
@@ -32,7 +29,7 @@ def a_priori(df_bd_preprocesada,support,confidence):
         split = df_bd_agrupada.values[i][0].split(",")
         matriz.append(split)
     #-----------------Se realiza algoritmo apriori y se imprimem las 20 mejores reglas --------------------------------
-    print( "\n---------------top 20 reglas  -----------------")
+    print( "---------------top 20 reglas  -----------------")
     association_rules = apriori(matriz, min_support=support, min_confidence=confidence, min_lift=3, min_length= None)
     reglas = []
     for idx, x in enumerate(association_rules):
@@ -46,6 +43,3 @@ def a_priori(df_bd_preprocesada,support,confidence):
     print ( "\n----------------Oferta Diaria -------------------------\n ")
     print ( " la oferta de hoy es  {} " .format(regla_diaria))
     print ( "\n----------------Oferta Diaria -------------------------\n ")
-    print("///////////////////////////////////////////")
-    print("Ejecución del Algoritmo A-priori terminada.")
-    print("///////////////////////////////////////////")
