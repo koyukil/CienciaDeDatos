@@ -19,7 +19,7 @@ def a_priori(df_bd_preprocesada,support,confidence):
 
     #df_codigos =  df_bd_preprocesada[['StockCode', 'Description']].groupby('StockCode')
     df_bd_agrupada = df_bd_agrupada.groupby('InvoiceNo').sum()
-    
+
     #Largo de la tabla anterior
     len_records = len(df_bd_agrupada)
 
@@ -38,8 +38,9 @@ def a_priori(df_bd_preprocesada,support,confidence):
         print (x.items )
         reglas.append(x.items)
 
-
+"""
     regla_diaria = [i for i in reglas[random.randrange(20)]]
     print ( "\n----------------Oferta Diaria -------------------------\n ")
     print ( " la oferta de hoy es  {} " .format(regla_diaria))
     print ( "\n----------------Oferta Diaria -------------------------\n ")
+"""
