@@ -78,7 +78,7 @@ for num_clusters in range_n_clusters:
 
 range_n_clusters = [2, 3, 4, 5, 6, 7, 8, 9, 10]
 
-print("Valores:\n")
+print("Valores:")
 for num_clusters in range_n_clusters:
     
     #Inicializamos k-means
@@ -90,7 +90,7 @@ for num_clusters in range_n_clusters:
     #Obtenemos valor de distancia entre los clusters (desde el centro al mas lejano)
     valor = silhouette_score(rfm_df_scaled, cluster_labels)
     print("\n")
-    print("Para n_clusters={0}, el valor es is {1}".format(num_clusters, valor))
+    print("Para n_clusters={0}, el valor es {1}".format(num_clusters, valor))
 
 
 #Podemos usar otros parámetros para ejecutar k-means. Disminuimos la cantidad de clusters
