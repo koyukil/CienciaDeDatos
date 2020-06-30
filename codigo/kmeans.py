@@ -73,20 +73,20 @@ range_n_clusters = [2, 3, 4, 5, 6, 7, 8, 9, 10]
 for num_clusters in range_n_clusters:
     kmeans = KMeans(n_clusters=num_clusters, max_iter=50)
     kmeans.fit(rfm_df_scaled)
-    
+
     ssd.append(kmeans.inertia_)
 
 range_n_clusters = [2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 print("Valores:\n")
 for num_clusters in range_n_clusters:
-    
+
     #Inicializamos k-means
     kmeans = KMeans(n_clusters=num_clusters, max_iter=50)
     kmeans.fit(rfm_df_scaled)
-    
+
     cluster_labels = kmeans.labels_
-    
+
     #Obtenemos valor de distancia entre los clusters (desde el centro al mas lejano)
     valor = silhouette_score(rfm_df_scaled, cluster_labels)
     print("\n")
@@ -110,4 +110,4 @@ plt.show()
 
 #Utilizamos un BoxPlot para visualizar los Clusters_Id vs Número de días desde última compra
 sns.boxplot(x='Cluster_Id', y='ÚltimaCompra', data=rfm)
-plt.show() 
+plt.show()

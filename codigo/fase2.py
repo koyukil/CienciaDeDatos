@@ -13,10 +13,15 @@ df_bd_preprocesada['Monto'] = df_bd_preprocesada['UnitPrice'] * df_bd_preprocesa
 
 
 #--------------------Llamado a funciones ------------------
+"""
 articulos_libras_promedio (df_bd_preprocesada)
-grupo_cliente(df_bd_preprocesada)
+grupo_cliente(df_bd_preprocesada)5
 numero_transacciones(df_bd_preprocesada)
-
+"""
 #--------------------Se ejecuta el archivo Apriori.py-------------
-a_priori(df_bd_preprocesada, 0.02, 0.3)
+dfr = []
+print("------------Enfoque particional, 6 particiones----------")
+for i in range(7):
+    dfr.append(df_bd_preprocesada.sample(frac=0.14))
+    a_priori(dfr[i], 0.001, 0.1)
 #Soporte, Confianza, respectivamente
