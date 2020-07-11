@@ -37,11 +37,11 @@ df_association_rules = []
 #------------se utilizarzán parcticiones de 2,4,6,8 y 10 ----------
 print("\n------------ Enfoque particional  ---------- \n")
 
-for i in range(4):
+for i in range(10):
     print( " \nPartición  número : {} \n " .format(i+1))
-    dfr.append(df_bd_preprocesada.sample(frac=0.25))
+    dfr.append(df_bd_preprocesada.sample(frac=0.1))
     start_time = time() #tiempo inicial
-    df_association_rules.append(  a_priori(dfr[i], 0.0025, 0.1))
+    df_association_rules.append(  a_priori(dfr[i], 0.001, 0.1))
     elapsed_time = time() - start_time #tiempo final
     print("tiempo: %0.10f segundos." % elapsed_time)
     print("número de reglas de asocación : {} " .format(len(df_association_rules[i])))
@@ -50,7 +50,7 @@ for i in range(4):
 
 #"------------ fin de apriori en particiones, se debe comparar con el general----------"
 contador=0
-for df in range(4):
+for df in range(10):
     for i in apriori_general:
         for j in df_association_rules[df]:
             if i == j:
